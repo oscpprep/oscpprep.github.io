@@ -1,4 +1,4 @@
-#[ALL REPOSITORIES](https://github.com/oscpprep?tab=repositories)
+# [ALL REPOSITORIES](https://github.com/oscpprep?tab=repositories)
 # Quickly Get Any Script Needed
 
 ### LINKED RESOURCES:::
