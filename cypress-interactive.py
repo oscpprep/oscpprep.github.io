@@ -14,10 +14,10 @@ ending_step = ["cy.wait(786);", "cy.pause();"][0]  # pause or wait
 collected_features = []
 def write_feature():
     temp_interactive_test_feature = f"""
-    Feature: Interactive Cypress Test
-    Scenario: Run interactive commands
-        {'\n'.join(collected_features)}
-        And I run the commands
+Feature: Interactive Cypress Test
+Scenario: Run interactive commands
+    {'\n'.join(collected_features)}
+    And I run the commands
     """
     with open(temp_feature_file_path, 'w') as f:
         f.write(temp_interactive_test_feature)
@@ -63,10 +63,19 @@ def launch_cypress():
 if not os.path.exists(temp_step_definitions_file_path):
     write_step()
 # write a feature file since we dont have one yet:
-if not os.path.exists(temp_feature_file_path):
     write_feature()
 # Load command history from history file
 load_history()
+
+def get_multiline_input(prompt):
+    print(prompt)
+    lines = []
+    while True:
+        line = input()
+        if line.strip() == "'''":
+            break
+        lines.append(line)
+    return "\n".join(lines)
 
 while True:
     # Take interactive input
@@ -75,18 +84,22 @@ while True:
     ]
     answers = inquirer.prompt(questions)
     current_command = answers['command']
+    
     if current_command.lower() == 'exit':
-            break
+        break
     # Log the command to history
     readline.add_history(current_command)
-
-    # save the history to a file before writing:
     save_history()
 
     if current_command.lower() == 'delete':
         delete_history()
         break
-    
+
+    if current_command.startswith("'''"):
+        print("Enter your code block (end with '''):")
+        multiline_input = get_multiline_input("Enter your code block (end with '''):")
+        current_command = multiline_input
+
     if 'Given' in current_command or 'When' in current_command or 'Then' in current_command or 'And' in current_command:
         collected_features.append(current_command)
         write_feature()
