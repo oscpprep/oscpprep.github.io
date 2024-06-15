@@ -32,7 +32,7 @@ export function alphanumeric(str) {
 }
 
 export function firstLineOfError(str) {
-    return str.split('\n')[0].replace(/[^a-zA-Z0-9 ]/g, ' ');
+    return alphanumeric(str.split('\n')[0]);
 }
 
 export function createTestSuite() {
