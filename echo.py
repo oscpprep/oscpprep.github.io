@@ -1,3 +1,51 @@
+from http.server import BaseHTTPRequestHandler, HTTPServer
+import cgi
+import base64
+
+PORT = 8000
+
+class TerminalEchoHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        """Serve the HTML form (text + file upload)."""
+        self.send_response(200)
+        self.send_header('Content-type', 'text/html; charset=utf-8')
+        self.end_headers()
+
+        html = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="utf-8"/>
+            <title>Terminal Echo</title>
+            <style>
+                body {{ font-family: sans-serif; padding: 20px; text-align: center; }}
+                textarea {{ width: 80%; height: 150px; padding: 10px; font-size: 14px; }}
+                .box {{ width: 80%; margin: 0 auto; text-align: left; }}
+                button {{ padding: 10px 20px; font-size: 16px; margin-top: 10px; cursor: pointer; }}
+                input[type=file] {{ margin-top: 10px; }}
+                small {{ color: #666; }}
+            </style>
+        </head>
+        <body>
+            <h1>Terminal Echo</h1>
+            <p>Paste text and/or upload a file. It will appear in your terminal.</p>
+
+            <div class="box">
+              <form method="POST" enctype="multipart/form-data">
+                  <label><b>Text</b></label><br>
+                  <textarea name="text_data" placeholder="Paste here..."></textarea><br><br>
+
+                  <label><b>File</b> <small>(optional)</small></label><br>
+                  <input type="file" name="upload_file"/><br>
+
+                  <button type="submit">Send to Terminal</button>
+              </form>
+            </div>
+        </body>
+        </html>
+        """
+        self.wfile.write(html.encode("utf-8"))
+
     def do_POST(self):
         """Handle multipart form (text + optional file) and save file to CWD."""
         import os
@@ -63,3 +111,14 @@
         self.wfile.write(
             b"<h2>Sent! File saved to current directory.</h2><a href='/'>Send more</a>"
         )
+
+if __name__ == "__main__":
+    server_address = ("", PORT)
+    httpd = HTTPServer(server_address, TerminalEchoHandler)
+    print(f"Server running at http://localhost:{PORT}")
+    print("Press Ctrl+C to stop.")
+
+    try:
+        httpd.serve_forever()
+    except KeyboardInterrupt:
+        print("\nServer stopped.")
